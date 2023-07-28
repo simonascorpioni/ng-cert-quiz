@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
 import {Category, Difficulty, ApiQuestion, Question, Results} from './data.models';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,46 @@ export class QuizService {
     return this.http.get<{ trivia_categories: Category[] }>(this.API_URL + "api_category.php").pipe(
       map(res => res.trivia_categories)
     );
+  }
+
+  getGroupedCategories(): Observable<Category[]> {
+    return this.http.get<{ trivia_categories: Category[] }>(this.API_URL + "api_category.php").pipe(
+      map(res => {
+        return res.trivia_categories.reduce((categories, currentCategory) => {
+          if (currentCategory.name.includes(":")) {
+            this._addSubcategory(categories, currentCategory);
+          } else {
+            categories.push({ ...currentCategory })
+          }
+          return categories
+        }, new Array<Category>());
+      })
+    );
+  }
+
+  private _addSubcategory(allCategories: Category[], currentCategory: Category) {
+
+    const [mainCategoryName, subCategoryName] = currentCategory.name.split(":")
+    const existingCategory = allCategories.find(e => e.name === mainCategoryName)
+
+    if (existingCategory) {
+      this._pushSubcategory(existingCategory, subCategoryName.trim(), currentCategory.id);
+    } else {
+      const newCategory: Category = {
+        name: mainCategoryName.trim(),
+        id: currentCategory.id,
+        subcategories: [{ name: subCategoryName.trim(), id: currentCategory.id }],
+      };
+      allCategories.push(newCategory);
+    }
+  }
+
+  private _pushSubcategory(category: Category, subcategoryName: string, subcategoryId: number): void {
+    if (category.subcategories) {
+      category.subcategories.push({ name: subcategoryName, id: subcategoryId });
+    } else {
+      category.subcategories = [{ name: subcategoryName, id: subcategoryId }];
+    }
   }
 
   createQuiz(categoryId: string, difficulty: Difficulty): Observable<Question[]> {

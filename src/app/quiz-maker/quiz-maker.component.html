@@ -1,18 +1,28 @@
 <div class="row">
   <div class="col-sm-11">
-    <select #category id="categorySelect">
-      <option>Select category</option>
+    <select #category id="categorySelect" [formControl]="categoryDropdown">
+      <option [value]="-1">Select category</option>
       <option [value]="category.id" *ngFor="let category of categories$ | async">
         {{category.name}}
       </option>
     </select>
+    <ng-container *ngIf="(subcategories$ | async) as subcategories">
+      <ng-container *ngIf="subcategories.length ?? 0 > 0">
+        <select #subcategory id="subcategorySelect" [formControl]="subcategoryDropdown">
+          <option [value]="-1">Select subcategory</option>
+          <option [value]="subcategory.id" *ngFor="let subcategory of subcategories">
+            {{subcategory.name}}
+          </option>
+        </select>
+      </ng-container>
+    </ng-container>
     <select #difficulty id="difficultySelect">
       <option>Select difficulty</option>
       <option>Easy</option>
       <option>Medium</option>
       <option>Hard</option>
     </select>
-    <button class="primary" id="createBtn" (click)="createQuiz(category.value, difficulty.value)">Create</button>
+    <button class="primary" id="createBtn" (click)="createQuiz(difficulty.value)">Create</button>
   </div>
 
 </div>
