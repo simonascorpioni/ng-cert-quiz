@@ -1,1 +1,35 @@
-<p>quiz-maker2 works!</p>
+<div class="row">
+    <div class="col-sm-11">
+        <div class="dropdown">
+            <input type="text" class="dropinput" [formControl]="categoryDropdown" placeholder="Select category">
+            <div class="dropdown-content" *ngIf="categories$ | async as categories">
+                <span *ngFor="let category of categories" (click)="updateCategories(category)"
+                    [innerHTML]="category.name">
+                </span>
+            </div>
+        </div>
+        <ng-container *ngIf="(subcategories$ | async) as subcategories">
+            <ng-container *ngIf="subcategories.length ?? 0 > 0">
+                <div class="dropdown">
+                    <input type="text" class="dropinput" [formControl]="subcategoryDropdown" placeholder="Select subcategory">
+                    <div class="dropdown-content">
+                        <span *ngFor="let subcategory of subcategories" (click)="updateSubcategories(subcategory)"
+                            [innerHTML]="subcategory.name">
+                        </span>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <select #difficulty id="difficultySelect">
+            <option>Select difficulty</option>
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+        </select>
+        <button class="primary" id="createBtn" (click)="createQuiz(difficulty.value)">Create</button>
+    </div>
+
+</div>
+<div class="row">
+    <app-quiz [questions]="questions$ | async"></app-quiz>
+</div>
