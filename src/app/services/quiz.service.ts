@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Category, Difficulty, ApiQuestion, Question, Results} from './data.models';
+import {Category, Difficulty, ApiQuestion, Question, Results} from '../models/data.models';
 import { Observable, map } from 'rxjs';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Category, Difficulty, Question, Subcategory } from '../../data.models';
+import { Category, Difficulty, Question, Subcategory } from '../../models/data.models';
 import { Observable, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
-import { QuizService } from '../../quiz.service';
+import { QuizService } from '../../services/quiz.service';
 import { FormControl } from '@angular/forms';
 
 @Component({

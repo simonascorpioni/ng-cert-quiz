@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {QuizMakerComponent} from './components/quiz-maker/quiz-maker.component';
 import {AnswersComponent} from './components/answers/answers.component';
-import {QuizService} from './quiz.service';
+import {QuizService} from './services/quiz.service';
 
 const routes: Routes = [{
   path: "result", component: AnswersComponent, resolve: {data: () => inject(QuizService).getLatestResults()}
