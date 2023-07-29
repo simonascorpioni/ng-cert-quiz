@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, inject, Input, OnChanges} from '@angular/core';
 import {Question} from '../../models/data.models';
 import {QuizService} from '../../services/quiz.service';
 import {Router} from '@angular/router';
@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent {
+export class QuizComponent implements OnChanges {
 
   @Input()
   questions: Question[] | null = [];
@@ -17,6 +17,10 @@ export class QuizComponent {
   quizService = inject(QuizService);
   router = inject(Router);
   showButtonToChange: boolean = true;
+
+  ngOnChanges(): void {
+    this.showButtonToChange = true;
+  }
 
   submit(): void {
     this.quizService.computeScore(this.questions ?? [], this.userAnswers);
