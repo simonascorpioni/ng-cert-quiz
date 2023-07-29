@@ -5,10 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {QuizMakerComponent} from './quiz-maker/quiz-maker.component';
-import { QuizComponent } from './quiz/quiz.component';
-import { QuestionComponent } from './question/question.component';
-import { AnswersComponent } from './answers/answers.component';
+import {QuizMakerComponent} from './components/quiz-maker/quiz-maker.component';
+import { QuizComponent } from './components/quiz/quiz.component';
+import { QuestionComponent } from './components/question/question.component';
+import { AnswersComponent } from './components/answers/answers.component';
+import { QuizMaker2Component } from './components/quiz-maker2/quiz-maker2.component';
+import { AutoFilterDropdownComponent } from './components/shared/auto-filter-dropdown/auto-filter-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { AnswersComponent } from './answers/answers.component';
     QuizMakerComponent,
     QuizComponent,
     QuestionComponent,
-    AnswersComponent
+    AnswersComponent,
+    QuizMaker2Component,
+    AutoFilterDropdownComponent
   ],
   imports: [
     BrowserModule,

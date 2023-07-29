@@ -1,8 +1,8 @@
 import {inject, NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {QuizMakerComponent} from './quiz-maker/quiz-maker.component';
-import {AnswersComponent} from './answers/answers.component';
+import {QuizMakerComponent} from './components/quiz-maker/quiz-maker.component';
+import {AnswersComponent} from './components/answers/answers.component';
 import {QuizService} from './quiz.service';
 
 const routes: Routes = [{

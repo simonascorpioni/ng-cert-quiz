@@ -1,6 +1,6 @@
 import {Component, inject, Input} from '@angular/core';
-import {Question} from '../data.models';
-import {QuizService} from '../quiz.service';
+import {Question} from '../../data.models';
+import {QuizService} from '../../quiz.service';
 import {Router} from '@angular/router';
 
 @Component({
