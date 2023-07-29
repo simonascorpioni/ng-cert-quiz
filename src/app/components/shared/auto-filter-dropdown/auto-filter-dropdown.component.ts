@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, combineLatest, map, withLatestFrom } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { DropdownOption } from 'src/app/models/data.models';
 
 @Component({
