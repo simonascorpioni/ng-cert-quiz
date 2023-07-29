@@ -1,1 +1,8 @@
-<p>auto-filter-dropdown works!</p>
+<div class="dropdown">
+    <input type="text" class="dropinput" [formControl]="inputControl" [placeholder]=placeholder>
+    <div class="dropdown-content" *ngIf="filteredInputs$ | async as inputs">
+        <span *ngFor="let input of inputs" (click)="updateInput(input)"
+            [innerHTML]="input.name">
+        </span>
+    </div>
+</div>

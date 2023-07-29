@@ -10,48 +10,27 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./quiz-maker2.component.css']
 })
 export class QuizMaker2Component {
-  categories$: Observable<Category[]> = this.quizService.getGroupedCategories();
-  categories: Category[] = [];
-  subcategories$!: Observable<Subcategory[]>;
+  categories$: Observable<Category[]>;
+  subcategories$!: Observable<Subcategory[] | null>;
   questions$!: Observable<Question[]>;
-  selectedCategory: Category | null = null;
-  categoryDropdown = new FormControl<string>('');
-  subcategoryDropdown = new FormControl<string>('');
+  selectedCategory!: Category;
+  selectedSubcategory: Subcategory | undefined = undefined;
 
 
   constructor(protected quizService: QuizService) {
-    this.categories$ = this.quizService.getGroupedCategories().pipe(
-      tap(categories => this.categories = categories)
-    );
-
-    this.categories$ = this.categoryDropdown.valueChanges.pipe(
-      withLatestFrom(this.quizService.getGroupedCategories()),
-      map(([userInput, categories]) => categories.filter(c => c.name.toLowerCase().indexOf(userInput?.toLowerCase()?userInput?.toLowerCase(): '') !== -1))
-    );
-
-    //logica da spostare dentro il dropdown
-    // if(this.subcategories$){
-    //   this.subcategories$ = this.subcategoryDropdown.valueChanges.pipe(
-    //     withLatestFrom(this.subcategories$),
-    //     map(([userInput, subcategories]) => subcategories.filter(s => s.name.toLowerCase().indexOf(userInput?.toLowerCase()?userInput?.toLowerCase(): '') !== -1))
-    //   );
-    // }
+    this.categories$ = this.quizService.getGroupedCategories();
   }
 
   updateCategories(category: Category) {
-    this.categoryDropdown.setValue(category.name);
     this.selectedCategory = category;
-    this.subcategories$ = this.selectedCategory && this.selectedCategory.subcategories
-    ? of(this.selectedCategory.subcategories)
-    : of([]);
-  }
-
-  updateSubcategories(subcategory: Subcategory) {
-    this.categoryDropdown.setValue(subcategory.name);
+    this.selectedSubcategory = undefined;
+    this.subcategories$ = category && category.subcategories
+    ? of(category.subcategories)
+    : of(null);
   }
 
   createQuiz(difficulty: string): void {
-    const id = this.subcategoryDropdown.value == '' ? this.selectedCategory?.id : this.subcategoryDropdown.value;
+    const id = this.selectedSubcategory ? this.selectedSubcategory.id : this.selectedCategory.id;
     if (id) {
       this.questions$ = this.quizService.createQuiz((id).toString(), difficulty as Difficulty);
     }

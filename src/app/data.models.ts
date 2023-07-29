@@ -31,5 +31,9 @@ export interface Results {
   score: number;
 }
 
-
 export type Difficulty = "Easy" | "Medium" | "Hard";
+
+export interface DropdownOption {
+  name: string;
+  id: number;
+}

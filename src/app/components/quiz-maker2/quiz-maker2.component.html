@@ -1,25 +1,10 @@
+<h1>Step 2</h1>
 <div class="row">
     <div class="col-sm-11">
-        <div class="dropdown">
-            <input type="text" class="dropinput" [formControl]="categoryDropdown" placeholder="Select category">
-            <div class="dropdown-content" *ngIf="categories$ | async as categories">
-                <span *ngFor="let category of categories" (click)="updateCategories(category)"
-                    [innerHTML]="category.name">
-                </span>
-            </div>
-        </div>
-        <ng-container *ngIf="(subcategories$ | async) as subcategories">
-            <ng-container *ngIf="subcategories.length ?? 0 > 0">
-                <div class="dropdown">
-                    <input type="text" class="dropinput" [formControl]="subcategoryDropdown" placeholder="Select subcategory">
-                    <div class="dropdown-content">
-                        <span *ngFor="let subcategory of subcategories" (click)="updateSubcategories(subcategory)"
-                            [innerHTML]="subcategory.name">
-                        </span>
-                    </div>
-                </div>
-            </ng-container>
-        </ng-container>
+
+        <app-auto-filter-dropdown [inputArray$]="categories$" (inputSelectionChange)="updateCategories($event)" placeholder="Select category"></app-auto-filter-dropdown>
+        <app-auto-filter-dropdown *ngIf="subcategories$ | async" [inputArray$]="subcategories$" [(inputSelection)]="selectedSubcategory" placeholder="Select subcategory"></app-auto-filter-dropdown>
+
         <select #difficulty id="difficultySelect">
             <option>Select difficulty</option>
             <option>Easy</option>
