@@ -16,10 +16,19 @@ export class QuizComponent {
   userAnswers: string[] = [];
   quizService = inject(QuizService);
   router = inject(Router);
+  showButtonToChange: boolean = true;
 
   submit(): void {
     this.quizService.computeScore(this.questions ?? [], this.userAnswers);
     this.router.navigateByUrl("/result");
+  }
+
+  onQuestionChange(i: number){
+    if (this.questions && this.questions.length >= 6 && i >= 0 && i < this.questions.length - 1) {
+      this.questions[i] = this.questions[5];
+      this.questions.pop();
+      this.showButtonToChange = false;
+    }
   }
 
 }
