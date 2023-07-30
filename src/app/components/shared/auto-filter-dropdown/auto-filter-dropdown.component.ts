@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, delay, map, switchMap, timer } from 'rxjs';
 import { DropdownOption } from 'src/app/models/data.models';
 
 @Component({
@@ -24,6 +24,10 @@ export class AutoFilterDropdownComponent<T extends DropdownOption> implements On
   filteredInputs$!: Observable<T[]>;
 
   ngOnInit() {
+    //To initialize dropdown without input
+    timer(0).pipe(delay(0)).subscribe(() => {
+      this.inputControl.setValue('');
+    });
     this.filteredInputs$ = combineLatest([this.inputControl.valueChanges, this.inputArray$]).pipe(
       map(([userInput, inputs]) => inputs!.filter(i => i.name.toLowerCase().indexOf(userInput!.toLowerCase()) !== -1))
     );

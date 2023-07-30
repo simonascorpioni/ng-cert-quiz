@@ -20,6 +20,7 @@ export class QuizComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.showButtonToChange = true;
+    this.userAnswers = [];
   }
 
   submit(): void {
