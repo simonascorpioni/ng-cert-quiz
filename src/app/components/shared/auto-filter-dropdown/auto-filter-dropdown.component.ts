@@ -25,7 +25,7 @@ export class AutoFilterDropdownComponent<T extends DropdownOption> implements On
 
   ngOnInit() {
     //To initialize dropdown without input
-    timer(0).pipe(delay(0)).subscribe(() => {
+    timer(0).subscribe(() => {
       this.inputControl.setValue('');
     });
     this.filteredInputs$ = combineLatest([this.inputControl.valueChanges, this.inputArray$]).pipe(

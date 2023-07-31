@@ -2,7 +2,7 @@
               (change)="userAnswers[i] = $event" (changeQuestion)="onQuestionChange(i)" [showButtonToChange]="showButtonToChange">
 </app-question>
 <div>
-  <button class="inverse large" *ngIf="userAnswers.length == 5" (click)="submit()">
+  <button class="inverse large" *ngIf="areAnswersComplete()" (click)="submit()">
     Submit
   </button>
 </div>

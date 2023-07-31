@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Category, Difficulty, Question, Subcategory } from '../../models/data.models';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { QuizService } from '../../services/quiz.service';
 import { FormControl } from '@angular/forms';
 
@@ -26,12 +26,12 @@ export class QuizMakerComponent {
     );
     
     this.subcategories$ = this.categoryDropdown.valueChanges.pipe(
-      switchMap(categoryId => {
+      map(categoryId => {
         this.subcategoryDropdown.setValue(-1);
         this.selectedCategory = this.categories.find(category => category.id == categoryId) || null;
         return this.selectedCategory && this.selectedCategory.subcategories
-          ? of(this.selectedCategory.subcategories)
-          : of([]);
+          ? this.selectedCategory.subcategories
+          : []
       })
     );
 

@@ -32,8 +32,13 @@ export class QuizComponent implements OnChanges {
     if (this.questions && this.questions.length >= 6 && i >= 0 && i < this.questions.length - 1) {
       this.questions[i] = this.questions[5];
       this.questions.pop();
+      this.userAnswers[i]= '';
       this.showButtonToChange = false;
     }
+  }
+
+  areAnswersComplete(): boolean {
+    return this.userAnswers.filter(el=>el).length == 5;
   }
 
 }
